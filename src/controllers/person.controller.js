@@ -1,18 +1,35 @@
+const Joi = require('joi');
+
 const { personService } = require('../services');
 
 const verifyExistence = require('../helpers/verify-existence.helper');
 
 const { logger } = require('../utils');
 
+const _validateRegisterPersonBody = (body, response) => {
+  const schema = Joi.object({
+    name: Joi.string().required(),
+    number: Joi.string().required()
+  });
+
+  const { error } = schema.validate(body);
+
+  if (error) {
+    return response.status(400).json({
+      message: 'Invalid data type',
+      error: error.details[0].message,
+      code: 'invalid_data_type'
+    });
+  }
+
+  return true;
+};
+
 const registerPerson = async(req, res) => {
   const { name, number } = req.body;
   const { id } = req.user;
 
-  if (!name || !number) {
-    return res.status(400).json({
-      message: 'Missing required fields'
-    });
-  }
+  _validateRegisterPersonBody({ name, number }, res);
 
   try {
     const personDTO = {
@@ -27,7 +44,7 @@ const registerPerson = async(req, res) => {
   } catch (err) {
     logger.error(err);
     return res.status(500).json({
-      message: 'error',
+      message: err.message,
       error: err,
       code: 'internal_server_error'
     });

@@ -14,7 +14,12 @@ const login = async(req, res) => {
   
     await verifyPassword(password, hashedPassword);
     
-    const token = jwt.sign({ id: user.id, email, username: user.username }, process.env.JWT_SECRET, {
+    const payload = {
+      id: user.id,
+      email: user.email,
+      username: user.username
+    };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: '1d'
     });
     
@@ -44,7 +49,12 @@ const register = async(req, res) => {
     };
     const registeredUser = await userService.register(userDTO);
 
-    const token = jwt.sign({ id: registeredUser.id, email, username }, process.env.JWT_SECRET, {
+    const payload = {
+      id: registeredUser.id,
+      email,
+      username
+    };
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: '1d'
     });
 

@@ -14,6 +14,7 @@
           icon="mdi-plus-thick"
           color="warning"
           size="16px"
+          @click="openRegisterOrderModal = true"
         />
       </div>
     </div>
@@ -96,6 +97,8 @@
       </q-table>
     </div>
   </q-page>
+
+  <RegisterOrderModal :value="openRegisterOrderModal" />
 </template>
 
 <script>
@@ -104,6 +107,7 @@ import { date } from "quasar";
 import orderService from "src/services/order.service";
 import StatusChip from "src/components/ui/StatusChip.vue";
 import ButtonGroup from "src/components/ui/ButtonGroup.vue";
+import RegisterOrderModal from "src/components/order/RegisterOrderModal.vue";
 
 const { formatDate } = date;
 
@@ -112,10 +116,12 @@ export default defineComponent({
   components: {
     StatusChip,
     ButtonGroup,
+    RegisterOrderModal,
   },
   data() {
     return {
       loading: false,
+      openRegisterOrderModal: false,
       rows: [],
       columns: [],
       actions: [],

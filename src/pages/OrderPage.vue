@@ -130,9 +130,11 @@ export default defineComponent({
     };
   },
   mounted() {
-    this.fetchData();
-    this.setColumns();
-    this.setActions();
+    this.$nextTick(() => {
+      this.fetchData();
+      this.setColumns();
+      this.setActions();
+    });
   },
   methods: {
     formatDate,

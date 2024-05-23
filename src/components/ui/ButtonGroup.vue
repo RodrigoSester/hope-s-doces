@@ -1,5 +1,5 @@
 <template>
-  <q-btn round :icon="iconButton" size="16px">
+  <q-btn fab-mini unelevated :icon="iconButton" size="16px">
     <q-menu anchor="bottom start" max-width="500px">
       <q-item
         clickable

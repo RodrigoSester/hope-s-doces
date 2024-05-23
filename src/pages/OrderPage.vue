@@ -130,9 +130,11 @@ export default defineComponent({
     };
   },
   mounted() {
-    this.fetchData();
-    this.setColumns();
-    this.setActions();
+    this.$nextTick(() => {
+      this.setColumns();
+      this.setActions();
+      this.fetchData();
+    });
   },
   methods: {
     formatDate,
@@ -250,6 +252,7 @@ export default defineComponent({
         this.rows = response;
         console.log("LOG: -> fetchData -> this.rows:", response);
       } catch (err) {
+        // TODO: Add toast
         console.error(err);
       } finally {
         this.loading = false;
@@ -257,15 +260,19 @@ export default defineComponent({
     },
 
     onEdit(item) {
+      // TODO: Implementar ação de edição
       console.log("LOG: -> onEdit -> item:", item);
     },
     onSetAsPaid(item) {
+      // TODO: Implementar ação de pagamento
       console.log("LOG: -> handleItemAction -> item:", item);
     },
     onSetAsDelivered(item) {
+      // TODO: Implementar ação de entrega
       console.log("LOG: -> handleItemAction -> item:", item);
     },
     onCancel(item) {
+      // TODO: Implementar ação de cancelamento
       console.log("LOG: -> handleItemAction -> item:", item);
     },
   },

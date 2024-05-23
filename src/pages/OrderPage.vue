@@ -131,9 +131,9 @@ export default defineComponent({
   },
   mounted() {
     this.$nextTick(() => {
-      this.fetchData();
       this.setColumns();
       this.setActions();
+      this.fetchData();
     });
   },
   methods: {

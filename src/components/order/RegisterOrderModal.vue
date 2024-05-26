@@ -11,7 +11,7 @@
         </div>
       </q-card-title>
       <q-card-section class="scroll register-order__card-section">
-        <q-form greedy @validation-error="showErrorToast">
+        <q-form ref="form" greedy @validation-error="showErrorToast">
           <div class="row">
             <div class="column col-8">
               <span class="register-order__input-label"> Cliente: </span>
@@ -55,7 +55,7 @@
                 <span class="register-order__input-label">
                   Data de entrega:
                 </span>
-                <q-input outlined type="date" />
+                <q-input v-model="date" outlined type="date" />
               </div>
             </div>
 
@@ -79,7 +79,7 @@
       </q-card-section>
       <q-card-actions class="q-pa-md row justify-end register-order__actions">
         <q-btn flat label="Cancelar" @click="openDialog = false" />
-        <q-btn color="primary" label="Salvar" @click="openDialog = false" />
+        <q-btn color="primary" label="Salvar" @click="save" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -87,6 +87,7 @@
 
 <script>
 import { defineComponent } from "vue";
+import personService from "src/services/person.service";
 
 export default defineComponent({
   name: "RegisterOrderModal",
@@ -102,13 +103,16 @@ export default defineComponent({
       price: 0,
       description: "",
       address: "",
+      date: "",
       personOptions: [],
     };
   },
   watch: {
     value(isOpen) {
       this.openDialog = isOpen;
-      console.log("abrindo modal");
+      if (isOpen) {
+        this.fetchPersons();
+      }
     },
   },
   methods: {
@@ -119,6 +123,7 @@ export default defineComponent({
         message: "Erro ao salvar o pedido",
       });
     },
+
     onScroll({ to, ref }) {
       console.log("LOG: -> onScroll -> to, ref:", to, ref);
       setTimeout(() => {
@@ -129,9 +134,53 @@ export default defineComponent({
         });
       }, 500);
     },
+
+    async fetchPersons() {
+      try {
+        const response = await personService.getAll();
+
+        this.personOptions = response;
+      } catch (err) {
+        console.error(err);
+      }
+    },
+    async save() {
+      if (this.$refs.form.validate()) {
+        return this.$q.notify({
+          color: "negative",
+          position: "bottom",
+          message: "Preencha todos os campos",
+        });
+      }
+
+      try {
+        const body = {
+          personId: this.personId,
+          price: this.price,
+          description: this.description,
+          address: this.address,
+          date: this.date,
+        };
+
+        const response = await personService.register(body);
+      } catch (err) {
+        console.error(err);
+      }
+    },
+
     closeModal() {
       this.openDialog = false;
-      this.$emit("input", false);
+      this.refreshData();
+      this.$emit("close", false);
+    },
+
+    refreshData() {
+      this.personId = null;
+      this.useClientAddress = false;
+      this.price = 0;
+      this.address = "";
+      this.description = "";
+      this.personOptions = [];
     },
   },
 });

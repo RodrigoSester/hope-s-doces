@@ -10,7 +10,7 @@
           <q-btn flat fab-mini icon="mdi-close" @click="closeModal" />
         </div>
       </q-card-title>
-      <q-card-section>
+      <q-card-section class="scroll register-order__card-section">
         <q-form greedy @validation-error="showErrorToast">
           <div class="row">
             <div class="column col-8">
@@ -77,7 +77,7 @@
           </div>
         </q-form>
       </q-card-section>
-      <q-card-actions class="row justify-end register-order__actions">
+      <q-card-actions class="q-pa-md row justify-end register-order__actions">
         <q-btn flat label="Cancelar" @click="openDialog = false" />
         <q-btn color="primary" label="Salvar" @click="openDialog = false" />
       </q-card-actions>
@@ -147,6 +147,10 @@ export default defineComponent({
     font-size: 1.5rem;
     font-family: Fredoka One;
     color: $text;
+  }
+
+  &__card-section {
+    height: 500px;
   }
 
   &__input-label {

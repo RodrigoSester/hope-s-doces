@@ -14,7 +14,8 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap");
 
-$primary: #f0e150;
+$primary: #fae19a;
+$secondary: #fefee4;
 $error: #ea5f40;
 $error--base: #cc0606;
 $error--text: #bd0303;
@@ -27,8 +28,8 @@ $warning--text: #bb9a30;
 $info: #4de8ee;
 $info--base: #12cdd4;
 $info--text: #07578c;
-$text: #464545;
-$text--base: #7d7d7d;
+$neutrals-100: #141415;
+$neutrals-80: #24231e;
 
 h1 {
   font-family: "Fredoka One", cursive;
@@ -37,10 +38,15 @@ h1 {
 .input {
   font-weight: bold;
   font-size: 0.8rem;
-  color: $text;
+  color: $neutrals-100;
+}
+
+.btn-default {
+  color: $primary;
+  background-color: $neutrals-80;
 }
 
 th {
   font-family: "Fredoka One", cursive;
-  color: $text--base !important;
+  color: $neutrals-80 !important;
 }

@@ -1,5 +1,6 @@
 // app global css in SCSS form
-$primary: #f0e150;
+$primary: #fae19a;
+$secondary: #fefee4;
 $error: #ea5f40;
 $error--base: #cc0606;
 $error--text: #bd0303;
@@ -28,4 +29,8 @@ $input: (
 $btn-default: (
   color: $primary,
   background-color: $neutrals-80,
+);
+
+$btn-outlined: (
+  color: $neutrals-80,
 );

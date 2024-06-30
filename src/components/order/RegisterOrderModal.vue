@@ -130,7 +130,9 @@ export default defineComponent({
       this.$q.notify({
         color: "negative",
         position: "bottom",
-        message: "Erro ao salvar o pedido",
+        message: this.$t("common.notify.error.create", {
+          entity: this.$t("common.singular.order"),
+        }),
       });
     },
 

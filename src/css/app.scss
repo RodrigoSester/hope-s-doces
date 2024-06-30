@@ -12,8 +12,8 @@ $warning--text: #bb9a30;
 $info: #4de8ee;
 $info--base: #12cdd4;
 $info--text: #07578c;
-$text: #464545;
-$text--base: #7d7d7d;
+$neutrals-100: #141415;
+$neutrals-80: #24231e;
 
 h1 {
   font-family: "Fredoka One", cursive;
@@ -22,5 +22,10 @@ h1 {
 $input: (
   font-weight: bold,
   font-size: 0.8rem,
-  color: $text,
+  color: $neutrals-100,
+);
+
+$btn-default: (
+  color: $primary,
+  background-color: $neutrals-80,
 );

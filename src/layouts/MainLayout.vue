@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header elevated class="main-layout__header">
       <q-toolbar>
         <q-btn
           flat
@@ -8,6 +8,7 @@
           round
           icon="menu"
           aria-label="Menu"
+          class="main-layout__menu-button"
           @click="toggleLeftDrawer"
         />
 
@@ -17,7 +18,12 @@
       </q-toolbar>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
+    <q-drawer
+      v-model="leftDrawerOpen"
+      show-if-above
+      bordered
+      class="main-layout__drawer"
+    >
       <q-list>
         <q-item class="q-pa-md main-layout__drawer-header">
           {{ $t("menu") }}
@@ -33,7 +39,7 @@
       </q-list>
     </q-drawer>
 
-    <q-page-container>
+    <q-page-container class="main-layout__page">
       <router-view />
     </q-page-container>
   </q-layout>
@@ -83,10 +89,26 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .main-layout {
-  &__drawer-header {
-    color: $text !important;
+  &__header {
+    background-color: $neutrals-80;
+  }
+
+  &__menu-button {
+    color: $primary;
+  }
+
+  &__title {
+    color: $primary;
     font-weight: bold;
     font-size: 24px;
+  }
+
+  &__drawer {
+    background-color: $secondary;
+  }
+
+  &__page {
+    background-color: $secondary;
   }
 }
 </style>

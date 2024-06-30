@@ -18,8 +18,15 @@ const getToken = () => {
 };
 
 const setToken = (token) => {
-  LocalStorage.set("token", token);
-  SessionStorage.set("token", token);
+  try {
+    LocalStorage.set("token", token);
+    SessionStorage.set("token", token);
+  } catch (e) {
+    $q.notify({
+      message: "Failed to save token",
+      type: "negative",
+    });
+  }
 };
 
 const removeToken = () => {

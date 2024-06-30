@@ -56,35 +56,6 @@
             </div>
           </q-td>
         </template>
-        <template #body-cell-delivery_status="props">
-          <q-td :props="props">
-            <StatusChip :status="props.row.payment_status" />
-          </q-td>
-        </template>
-        <template #body-cell-delivered_at="props">
-          <q-td :props="props">
-            <span>
-              {{ formatDate(props.row.delivered_at, "DD/MM/YYYY HH:MM") }}
-            </span>
-          </q-td>
-        </template>
-        <template #body-cell-payment_status="props">
-          <q-td :props="props">
-            <StatusChip :status="props.row.payment_status" />
-          </q-td>
-        </template>
-        <template #body-cell-paid_at="props">
-          <q-td :props="props">
-            <span>{{ formatDate(props.row.paid_at, "DD/MM/YYYY HH:MM") }}</span>
-          </q-td>
-        </template>
-        <template #body-cell-created_at="props">
-          <q-td :props="props">
-            <span>
-              {{ formatDate(props.row.created_at, "DD/MM/YYYY HH:MM") }}
-            </span>
-          </q-td>
-        </template>
         <template #body-cell-actions="{ row }">
           <q-td>
             <ButtonGroup
@@ -102,16 +73,14 @@
 <script>
 import { defineComponent } from "vue";
 import { date } from "quasar";
-import orderService from "src/services/order.service";
-import StatusChip from "src/components/ui/StatusChip.vue";
+import clientService from "src/services/client.service";
 import ButtonGroup from "src/components/ui/ButtonGroup.vue";
 
 const { formatDate } = date;
 
 export default defineComponent({
-  name: "OrderPage",
+  name: "ClientList",
   components: {
-    StatusChip,
     ButtonGroup,
   },
   data() {
@@ -144,67 +113,38 @@ export default defineComponent({
       this.columns = [
         {
           name: "id",
-          label: "ID do pedido",
+          label: "ID do cliente",
           align: "center",
           field: "id",
           sortable: true,
-          headerClasses: "order__table-header__id",
+          headerClasses: "client__table-header__id",
         },
         {
-          name: "person",
-          label: "Pessoa",
+          name: "name",
+          label: "Nome",
           align: "left",
-          field: "person_id",
+          field: "name",
           sortable: true,
         },
         {
-          name: "description",
-          label: "Descrição",
+          name: "email",
+          label: "E-mail",
           align: "left",
-          field: "description",
-          sortable: true,
+          field: "email",
+          sortable: false,
         },
         {
-          name: "value",
-          label: "Total",
+          name: "number",
+          label: "Número de contato",
           align: "left",
-          field: "value",
-          format: (val) => `R$ ${parseFloat(val).toFixed(2)}`,
-          sortable: true,
+          field: "number",
+          sortable: false,
         },
         {
-          name: "delivery_status",
-          label: "Status de entrega",
+          name: "totalOrders",
+          label: "Total de pedidos",
           align: "left",
-          field: "delivery_status",
-          sortable: true,
-        },
-        {
-          name: "delivered_at",
-          label: "Entregue em",
-          align: "left",
-          field: "delivered_at",
-          sortable: true,
-        },
-        {
-          name: "payment_status",
-          label: "Status de pagamento",
-          align: "center",
-          field: "payment_status",
-          sortable: true,
-        },
-        {
-          name: "paid_at",
-          label: "Pago em",
-          align: "left",
-          field: "paid_at",
-          sortable: true,
-        },
-        {
-          name: "created_at",
-          label: "Data de criação",
-          align: "left",
-          field: "created_at",
+          field: "totalOrders",
           sortable: true,
         },
         {
@@ -212,7 +152,7 @@ export default defineComponent({
           label: "Endereço",
           align: "left",
           field: "adress",
-          sortable: true,
+          sortable: false,
         },
         {
           name: "actions",
@@ -229,19 +169,9 @@ export default defineComponent({
           callback: (item) => this.onEdit(item),
         },
         {
-          label: "Marcar como pago",
-          icon: "mdi-currency-usd",
-          callback: (item) => this.onSetAsPaid(item),
-        },
-        {
-          label: "Marcar como entregue",
-          icon: "mdi-truck",
-          callback: (item) => this.onSetAsDelivered(item),
-        },
-        {
           label: "Excluir",
           icon: "mdi-cancel",
-          callback: (item) => this.onCancel(item),
+          callback: (item) => this.onDelete(item),
         },
       ];
     },
@@ -249,10 +179,9 @@ export default defineComponent({
       this.loading = true;
 
       try {
-        const response = await orderService.getAll();
+        const response = await clientService.getAll();
 
         this.rows = response;
-        console.log("LOG: -> fetchData -> this.rows:", response);
       } catch (err) {
         // TODO: Add toast
         console.error(err);
@@ -265,15 +194,7 @@ export default defineComponent({
       // TODO: Implementar ação de edição
       console.log("LOG: -> onEdit -> item:", item);
     },
-    onSetAsPaid(item) {
-      // TODO: Implementar ação de pagamento
-      console.log("LOG: -> handleItemAction -> item:", item);
-    },
-    onSetAsDelivered(item) {
-      // TODO: Implementar ação de entrega
-      console.log("LOG: -> handleItemAction -> item:", item);
-    },
-    onCancel(item) {
+    onDelete(item) {
       // TODO: Implementar ação de cancelamento
       console.log("LOG: -> handleItemAction -> item:", item);
     },

@@ -21,14 +21,23 @@
               class="q-mb-md"
               :rules="rules"
             />
-            <q-btn
-              type="submit"
-              label="Entrar"
-              color="primary"
-              class="q-mb-md"
-              :loading="loading"
-              @click="login"
-            />
+            <div class="row justify-around">
+              <q-btn
+                flat
+                type="submit"
+                label="Criar conta"
+                class="q-mb-md btn-outlined"
+                :loading="loading"
+                @click="createUser"
+              />
+              <q-btn
+                type="submit"
+                label="Entrar"
+                class="q-mb-md btn-default"
+                :loading="loading"
+                @click="login"
+              />
+            </div>
           </q-form>
         </q-card-section>
       </q-card>
@@ -55,6 +64,10 @@ export default defineComponent({
     };
   },
   methods: {
+    createUser() {
+      // TODO: implement create user
+    },
+
     async login() {
       this.loading = true;
 
@@ -80,8 +93,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .login {
+  background-color: $secondary;
+
   &__title {
-    color: $primary !important;
+    color: $neutrals-80 !important;
     text-align: center;
   }
 }

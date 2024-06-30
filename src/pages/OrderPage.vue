@@ -12,7 +12,7 @@
             })
           "
           icon="mdi-plus-thick"
-          color="warning"
+          class="btn-default"
           size="16px"
         />
       </div>
@@ -20,7 +20,7 @@
     <div class="row q-pa-md order__table">
       <q-table
         class="order__table-list"
-        table-header-class="bg-primary order__table-header"
+        table-header-class="order__table-header"
         icon-first-page="mdi-page-first"
         icon-prev-page="mdi-chevron-left"
         icon-next-page="mdi-chevron-right"
@@ -280,7 +280,7 @@ export default defineComponent({
   }
 
   &__header-title {
-    color: $primary;
+    color: $neutrals-80;
     text-align: center;
     font-size: 60px;
   }
@@ -291,6 +291,8 @@ export default defineComponent({
   }
 
   &__table-header {
+    background-color: $primary;
+
     &__id {
       max-width: 100px;
       text-wrap: wrap;
@@ -308,12 +310,12 @@ export default defineComponent({
 
   &__table-list-person {
     font-weight: bold;
-    color: $text;
+    color: $neutrals-100;
     font-size: 16px;
   }
 
   &__table-list-person-number {
-    color: $text--base;
+    color: $neutrals-80;
   }
 }
 </style>

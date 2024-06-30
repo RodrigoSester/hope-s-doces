@@ -22,6 +22,7 @@
                 clearable
                 options-dense
                 outlined
+                dense
                 hide-bottom-space
                 option-value="id"
                 option-label="name"
@@ -35,7 +36,7 @@
               <span class="register-order__input-label">
                 Descrição do pedido:
               </span>
-              <q-input v-model="description" outlined autogrow />
+              <q-input v-model="description" dense outlined autogrow />
             </div>
 
             <div class="row justify-between col-12">
@@ -44,6 +45,7 @@
                 <q-input
                   v-model="price"
                   outlined
+                  dense
                   prefix="R$"
                   mask="#,##"
                   fill-mask="0"
@@ -55,7 +57,7 @@
                 <span class="register-order__input-label">
                   Data de entrega:
                 </span>
-                <q-input v-model="date" outlined type="date" />
+                <q-input v-model="date" dense outlined type="date" />
               </div>
             </div>
 
@@ -71,15 +73,20 @@
                 <span class="register-order__input-label">
                   Endereço de entrega:
                 </span>
-                <q-input v-model="address" outlined />
+                <q-input v-model="address" dense outlined />
               </div>
             </div>
           </div>
         </q-form>
       </q-card-section>
       <q-card-actions class="q-pa-md row justify-end register-order__actions">
-        <q-btn flat label="Cancelar" @click="openDialog = false" />
-        <q-btn color="primary" label="Salvar" @click="save" />
+        <q-btn
+          flat
+          class="btn-outlined"
+          label="Cancelar"
+          @click="openDialog = false"
+        />
+        <q-btn class="btn-default" label="Salvar" @click="save" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -189,13 +196,14 @@ export default defineComponent({
 <style lang="scss">
 .register-order {
   &__header {
-    border-bottom: 1px solid $text--base;
+    border-bottom: 1px solid $primary;
+    background-color: #fef3d8;
   }
 
   &__header-label {
     font-size: 1.5rem;
     font-family: Fredoka One;
-    color: $text;
+    color: $neutrals-100;
   }
 
   &__card-section {
@@ -205,12 +213,13 @@ export default defineComponent({
 
   &__input-label {
     font-size: 0.75rem;
-    color: $text;
+    color: $neutrals-100;
     font-weight: bold;
   }
 
   &__actions {
-    border-top: 1px solid $text--base;
+    border-top: 1px solid $primary;
+    background-color: #fef3d8;
   }
 }
 </style>

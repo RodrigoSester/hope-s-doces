@@ -17,13 +17,19 @@
       <q-card-section class="scroll register-client__card-section">
         <q-form ref="form" greedy @validation-error="showErrorToast">
           <div class="row">
-            <div class="column full-width q-my-md" cols="12">
+            <span class="subtitle q-mb-sm">
+              {{ $t("common.subtitle.informations") }}
+            </span>
+            <div class="column full-width" cols="12">
               <span class="register-client__input-label">
                 {{ $t("common.fields.name") }}:
               </span>
               <q-input v-model="name" dense outlined autogrow />
             </div>
 
+            <span class="subtitle q-mt-md q-mb-sm">
+              {{ $t("common.subtitle.contact") }}
+            </span>
             <div class="row justify-between col-12">
               <div class="column col-6 q-pr-md">
                 <span class="register-client__input-label">
@@ -31,16 +37,21 @@
                 </span>
                 <q-input v-model="email" outlined dense />
               </div>
+
+              <div class="column col-6">
+                <span class="register-client__input-label">
+                  {{ $t("common.fields.phone") }}:
+                </span>
+                <q-input v-model="phone" dense outlined />
+              </div>
             </div>
 
-            <div class="column col-6">
-              <span class="register-client__input-label">
-                {{ $t("common.fields.phone") }}:
+            <div class="row q-mt-md">
+              <span class="subtitle q-mb-sm">
+                {{ $t("common.fields.address") }}
               </span>
-              <q-input v-model="phone" dense outlined />
             </div>
-
-            <div class="column col-6">
+            <div class="column col-12">
               <span class="register-client__input-label">
                 {{ $t("common.fields.address") }}:
               </span>

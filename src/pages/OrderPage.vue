@@ -98,7 +98,10 @@
     </div>
   </q-page>
 
-  <RegisterOrderModal :value="openRegisterOrderModal" />
+  <RegisterOrderModal
+    :value="openRegisterOrderModal"
+    @close="closeRegisterModal"
+  />
 </template>
 
 <script>
@@ -280,6 +283,11 @@ export default defineComponent({
     onCancel(item) {
       // TODO: Implementar ação de cancelamento
       console.log("LOG: -> handleItemAction -> item:", item);
+    },
+
+    closeRegisterModal() {
+      this.openRegisterOrderModal = false;
+      this.fetchData();
     },
   },
 });

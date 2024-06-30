@@ -5,7 +5,11 @@
         <div
           class="q-pa-md row justify-between items-center register-order__header"
         >
-          <span class="register-order__header-label"> Registrar pedido </span>
+          <span class="register-order__header-label">
+            {{
+              $t("common.modal.create", { entity: $t("common.entity.order") })
+            }}
+          </span>
 
           <q-btn flat fab-mini icon="mdi-close" @click="closeModal" />
         </div>
@@ -14,7 +18,9 @@
         <q-form ref="form" greedy @validation-error="showErrorToast">
           <div class="row">
             <div class="column col-8">
-              <span class="register-order__input-label"> Cliente: </span>
+              <span class="register-order__input-label">
+                {{ $t("common.singular.client") }}:
+              </span>
               <q-select
                 v-model="personId"
                 use-input
@@ -34,14 +40,16 @@
 
             <div class="column full-width q-my-md" cols="12">
               <span class="register-order__input-label">
-                Descrição do pedido:
+                {{ $t("order.registerModal.description") }}:
               </span>
               <q-input v-model="description" dense outlined autogrow />
             </div>
 
             <div class="row justify-between col-12">
               <div class="column col-6 q-pr-md">
-                <span class="register-order__input-label"> Valor: </span>
+                <span class="register-order__input-label">
+                  {{ $t("order.registerModal.value") }}:
+                </span>
                 <q-input
                   v-model="price"
                   outlined
@@ -55,7 +63,7 @@
 
               <div class="column col-6">
                 <span class="register-order__input-label">
-                  Data de entrega:
+                  {{ $t("order.registerModal.deliveryDate") }}:
                 </span>
                 <q-input v-model="date" dense outlined type="date" />
               </div>
@@ -64,14 +72,14 @@
             <div class="q-mt-md row col-12 justify-between">
               <div class="column col-6">
                 <span class="register-order__input-label">
-                  Utilizar endereço do cliente?
+                  {{ $t("order.registerModal.useClientAddress") }}?
                 </span>
                 <q-toggle v-model="useClientAddress" />
               </div>
 
               <div class="column col-6">
                 <span class="register-order__input-label">
-                  Endereço de entrega:
+                  {{ $t("order.registerModal.deliveryAddress") }}:
                 </span>
                 <q-input v-model="address" dense outlined />
               </div>
@@ -80,12 +88,7 @@
         </q-form>
       </q-card-section>
       <q-card-actions class="q-pa-md row justify-end register-order__actions">
-        <q-btn
-          flat
-          class="btn-outlined"
-          label="Cancelar"
-          @click="openDialog = false"
-        />
+        <q-btn flat class="btn-outlined" label="Cancelar" @click="closeModal" />
         <q-btn class="btn-default" label="Salvar" @click="save" />
       </q-card-actions>
     </q-card>
@@ -154,7 +157,7 @@ export default defineComponent({
     async save() {
       if (this.$refs.form.validate()) {
         return this.$q.notify({
-          color: "negative",
+          type: "negative",
           position: "bottom",
           message: "Preencha todos os campos",
         });
@@ -169,9 +172,12 @@ export default defineComponent({
           date: this.date,
         };
 
-        const response = await personService.register(body);
+        await personService.register(body);
       } catch (err) {
-        console.error(err);
+        this.$q.notify({
+          type: "negative",
+          message: "Erro ao registrar pedido",
+        });
       }
     },
 

@@ -14,7 +14,7 @@
           icon="mdi-plus-thick"
           class="btn-default"
           size="16px"
-          @click="clientModal = true"
+          @click="openRegisterClientModal = true"
         />
       </div>
     </div>

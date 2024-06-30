@@ -67,6 +67,10 @@
         </template>
       </q-table>
     </div>
+    <RegisterClientModal
+      :value="openRegisterClientModal"
+      @close="closeRegisterModal"
+    />
   </q-page>
 </template>
 
@@ -75,6 +79,7 @@ import { defineComponent } from "vue";
 import { date } from "quasar";
 import clientService from "src/services/client.service";
 import ButtonGroup from "src/components/ui/ButtonGroup.vue";
+import RegisterClientModal from "src/components/client/RegisterClientModal.vue";
 
 const { formatDate } = date;
 
@@ -82,11 +87,12 @@ export default defineComponent({
   name: "ClientList",
   components: {
     ButtonGroup,
+    RegisterClientModal,
   },
   data() {
     return {
       loading: false,
-      openRegisterOrderModal: false,
+      openRegisterClientModal: false,
       rows: [],
       columns: [],
       actions: [],
@@ -200,7 +206,7 @@ export default defineComponent({
     },
 
     closeRegisterModal() {
-      this.openRegisterOrderModal = false;
+      this.openRegisterClientModal = false;
       this.fetchData();
     },
   },

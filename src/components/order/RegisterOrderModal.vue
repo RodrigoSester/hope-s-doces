@@ -157,7 +157,7 @@ export default defineComponent({
       }
     },
     async save() {
-      if (this.$refs.form.validate()) {
+      if (!this.$refs.form.validate()) {
         return this.$q.notify({
           type: "negative",
           position: "bottom",

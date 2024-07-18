@@ -42,7 +42,12 @@
                 <span class="register-client__input-label">
                   {{ $t("common.fields.phone") }}:
                 </span>
-                <q-input v-model="phone" dense outlined />
+                <q-input
+                  v-model="phone"
+                  dense
+                  outlined
+                  mask="(##) # ####-####"
+                />
               </div>
             </div>
 
@@ -104,7 +109,7 @@ export default defineComponent({
     },
 
     async save() {
-      if (this.$refs.form.validate()) {
+      if (!this.$refs.form.validate()) {
         return this.$q.notify({
           type: "negative",
           position: "bottom",
@@ -116,11 +121,20 @@ export default defineComponent({
         const body = {
           name: this.name,
           email: this.email,
-          phone: this.phone,
+          number: this.phone,
           address: this.address,
         };
 
         await clientService.register(body);
+
+        this.$q.notify({
+          type: "positive",
+          message: this.$t("common.notify.success.create", {
+            entity: this.$t("common.singular.client"),
+          }),
+        });
+
+        this.closeModal();
       } catch (err) {
         this.$q.notify({
           type: "negative",
@@ -132,7 +146,7 @@ export default defineComponent({
     closeModal() {
       this.openDialog = false;
       this.refreshData();
-      this.$emit("close", false);
+      this.$emit("close");
     },
 
     refreshData() {

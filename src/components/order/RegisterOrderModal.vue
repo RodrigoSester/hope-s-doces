@@ -97,7 +97,7 @@
 
 <script>
 import { defineComponent } from "vue";
-import personService from "src/services/person.service";
+import clientService from "src/services/client.service";
 
 export default defineComponent({
   name: "RegisterOrderModal",
@@ -149,7 +149,7 @@ export default defineComponent({
 
     async fetchPersons() {
       try {
-        const response = await personService.getAll();
+        const response = await clientService.getAll();
 
         this.personOptions = response;
       } catch (err) {
@@ -174,7 +174,7 @@ export default defineComponent({
           date: this.date,
         };
 
-        await personService.register(body);
+        await clientService.register(body);
       } catch (err) {
         this.$q.notify({
           type: "negative",

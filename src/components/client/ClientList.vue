@@ -154,10 +154,10 @@ export default defineComponent({
           sortable: true,
         },
         {
-          name: "adress",
+          name: "address",
           label: "Endereço",
           align: "left",
-          field: "adress",
+          field: "address",
           sortable: false,
         },
         {

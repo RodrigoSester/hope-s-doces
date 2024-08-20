@@ -69,6 +69,7 @@
     </div>
     <RegisterClientModal
       :value="openRegisterClientModal"
+      :data="clientData"
       @close="closeRegisterModal"
     />
   </q-page>
@@ -97,6 +98,7 @@ export default defineComponent({
       columns: [],
       actions: [],
       perPageOptions: [10, 25, 50],
+      clientData: {},
       pagination: {
         sortBy: "id",
         descending: false,
@@ -197,8 +199,8 @@ export default defineComponent({
     },
 
     onEdit(item) {
-      // TODO: Implementar ação de edição
-      console.log("LOG: -> onEdit -> item:", item);
+      this.clientData = item;
+      this.openRegisterClientModal = true;
     },
     onDelete(item) {
       // TODO: Implementar ação de cancelamento
@@ -206,6 +208,7 @@ export default defineComponent({
     },
 
     closeRegisterModal() {
+      this.clientData = {};
       this.openRegisterClientModal = false;
       this.fetchData();
     },

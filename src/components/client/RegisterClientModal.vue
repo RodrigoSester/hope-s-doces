@@ -6,9 +6,7 @@
           class="q-pa-md row justify-between items-center register-client__header"
         >
           <span class="register-client__header-label">
-            {{
-              $t("common.modal.create", { entity: $t("common.entity.client") })
-            }}
+            {{ modalTitle }}
           </span>
 
           <q-btn flat fab-mini icon="mdi-close" @click="closeModal" />
@@ -67,7 +65,7 @@
       </q-card-section>
       <q-card-actions class="q-pa-md row justify-end register-client__actions">
         <q-btn flat class="btn-outlined" label="Cancelar" @click="closeModal" />
-        <q-btn class="btn-default" label="Salvar" @click="save" />
+        <q-btn class="btn-default" label="Salvar" @click="handleSave" />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -81,9 +79,14 @@ export default defineComponent({
   name: "RegisterClientModal",
   props: {
     value: Boolean,
+    data: {
+      type: Object,
+      default: () => ({}),
+    },
   },
   data() {
     return {
+      clientId: null,
       openDialog: false,
       loading: false,
       email: "",
@@ -92,9 +95,27 @@ export default defineComponent({
       phone: "",
     };
   },
+  computed: {
+    modalTitle() {
+      return this.$t(
+        this.clientId ? "common.modal.update" : "common.modal.create",
+        {
+          entity: this.$t("common.entity.client"),
+        }
+      );
+    },
+  },
   watch: {
     value(isOpen) {
       this.openDialog = isOpen;
+
+      if (this.data) {
+        this.clientId = this.data.id;
+        this.name = this.data.name;
+        this.email = this.data.email;
+        this.phone = this.data.number;
+        this.address = this.data.address;
+      }
     },
   },
   methods: {
@@ -108,7 +129,7 @@ export default defineComponent({
       });
     },
 
-    async save() {
+    async handleSave() {
       if (!this.$refs.form.validate()) {
         return this.$q.notify({
           type: "negative",
@@ -117,22 +138,16 @@ export default defineComponent({
         });
       }
 
+      const body = {
+        clientId: this.clientId,
+        name: this.name,
+        email: this.email,
+        number: this.phone,
+        address: this.address,
+      };
+
       try {
-        const body = {
-          name: this.name,
-          email: this.email,
-          number: this.phone,
-          address: this.address,
-        };
-
-        await clientService.register(body);
-
-        this.$q.notify({
-          type: "positive",
-          message: this.$t("common.notify.success.create", {
-            entity: this.$t("common.singular.client"),
-          }),
-        });
+        this.clientId ? await this.update(body) : await this.save(body);
 
         this.closeModal();
       } catch (err) {
@@ -141,6 +156,28 @@ export default defineComponent({
           message: "Erro ao registrar cliente",
         });
       }
+    },
+
+    async save(body) {
+      await clientService.register(body);
+
+      this.$q.notify({
+        type: "positive",
+        message: this.$t("common.notify.success.create", {
+          entity: this.$t("common.singular.client"),
+        }),
+      });
+    },
+
+    async update(body) {
+      await clientService.update(body);
+
+      this.$q.notify({
+        type: "positive",
+        message: this.$t("common.notify.success.update", {
+          entity: this.$t("common.singular.client"),
+        }),
+      });
     },
 
     closeModal() {
